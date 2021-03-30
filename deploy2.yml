@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-deployment
+  labels:
+    app: k8s-app
+    stage: prod
+spec:
+  selector:
+    matchLabels:
+      project: lvl
+  template:
+    metadata:
+      labels:
+        project: lvl
+    spec:
+      containers:
+        - name: lvl-web
+          image: levelup2spb/automatingdeploy:latest
+          ports:
+            - containerPort: 80

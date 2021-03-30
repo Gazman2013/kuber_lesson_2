@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-deployment
+  labels:
+    app: k8s-app
+    lkj: rfr
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: lvlup
+  template:
+    metadata:
+      labels:
+        project: lvlup
+    spec:
+      containers:
+        - name: lvlup-web
+          image: levelup2spb/automatingdeploy:latest
+          ports:
+            - containerPort: 80

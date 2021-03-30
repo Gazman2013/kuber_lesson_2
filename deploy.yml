@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-autoscaling
+  labels:
+    app: k8s-app
+    lkj: rfr
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: lvlupspb
+  template:
+    metadata:
+      labels:
+        project: lvlupspb
+    spec:
+      containers:
+        - name: lvlupspb
+          image: levelup2spb/automatingdeploy
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: myscale
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-web-autoscaling
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type : Resource
+    resource:
+      name: memory
+      target:
+        type: AverageValue
+        averageValue: 100Mi
